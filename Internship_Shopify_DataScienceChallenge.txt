@@ -1,0 +1,60 @@
+1)
+a)
+AOV is calculated by taking the sum of revenue, which then is divided by the total amount of orders.
+Even though these shops are selling relatively affordable sneakers, 
+the AOV can be high when there are multiple orders that consists of thousands of sneakers 
+(each of them can cheap but when there are thousands of them it adds up to the high order cost).
+b)
+We should use the metric "Average item value", i.e., taking the sum of revenue, which is then divided by
+the total amount of items sales in all orders.
+c)
+357.9215222
+
+Python Code:
+-----------------------------------------------------------------------------------------
+
+import sqlite3, csv
+
+if __name__ == '__main__':
+    
+    f = open("2019 Winter Data Science Intern Challenge Data Set - Sheet1.csv", "r")
+    reader = list(csv.DictReader(f))
+
+    total_revenue = 0.0
+    total_items = 0.0
+
+    
+    for i in range(len(reader)):
+        total_revenue += float(reader[i]["order_amount"])
+        total_items += float(reader[i]["total_items"])
+
+    print("Average item value =", total_revenue / total_items)
+    print("AOV =", total_revenue / len(reader))
+
+-----------------------------------------------------------------------------------------
+
+2)
+a)
+Answer: 54
+SQL Query:
+SELECT COUNT(*) FROM Orders O, Shippers S
+WHERE O.ShipperID = S.ShipperID AND S.ShipperName = "Speedy Express"
+
+
+Answer: Peacock
+SQL Query:
+SELECT E.LastName, COUNT(*) FROM Employees E, Orders O
+WHERE O.EmployeeID = E.EmployeeID
+GROUP BY E.EmployeeID
+ORDER BY COUNT(*) DESC
+LIMIT 1
+
+c)
+Answer: Gorgonzola Telino
+SQL Query:
+SELECT P.ProductName, COUNT(*) FROM Customers C, Orders O, Products P, OrderDetails OD
+WHERE C.CustomerID = O.CustomerID AND OD.OrderID = O.OrderID AND OD.ProductID = P.ProductID AND Country = "Germany"
+GROUP BY P.ProductName
+ORDER BY COUNT(*) DESC
+LIMIT 1
+
